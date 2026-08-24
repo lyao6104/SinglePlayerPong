@@ -19,24 +19,24 @@ public partial class AiPaddle : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        var velocity = Vector2.Zero;
+        var direction = Vector2.Zero;
 
         if (Position.Y > _ball.Position.Y)
         {
-            velocity.Y -= 1;
+            direction.Y -= 1;
         }
 
         if (Position.Y < _ball.Position.Y)
         {
-            velocity.Y += 1;
+            direction.Y += 1;
         }
 
-        if (velocity.Length() > 0)
+        if (direction.Length() > 0)
         {
-            velocity = velocity.Normalized() * Speed;
+            direction = direction.Normalized() * Speed;
         }
 
-        MoveAndCollide(velocity * Speed);
+        MoveAndCollide(direction * Speed);
         Position = new Vector2(_xPos, Position.Y);
     }
 }
