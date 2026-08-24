@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://s73klvapx8cc"]
+
+[ext_resource type="Script" uid="uid://blkpc0dobfgtl" path="res://Scripts/AiPaddle.cs" id="1_xeic3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oufw4"]
+size = Vector2(32, 256)
+
+[node name="AIPaddle" type="CharacterBody2D" unique_id=1613366336]
+script = ExtResource("1_xeic3")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=387686570]
+polygon = PackedVector2Array(-16, -128, 16, -128, 16, 128, -16, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2069210432]
+shape = SubResource("RectangleShape2D_oufw4")

@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://ceu771rqxpk0b"]
+
+[ext_resource type="PackedScene" uid="uid://bkadht57160lf" path="res://Scenes/Paddle.tscn" id="1_2gd4f"]
+[ext_resource type="PhysicsMaterial" uid="uid://h1xu6wn50q0u" path="res://Materials/DefaultPhysicsMaterial.tres" id="1_pyk7t"]
+[ext_resource type="Script" uid="uid://vgongcn4qewo" path="res://Scripts/Ball.cs" id="2_x00a1"]
+[ext_resource type="PackedScene" uid="uid://s73klvapx8cc" path="res://Scenes/AIPaddle.tscn" id="4_x00a1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oufw4"]
+radius = 16.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trkms"]
+size = Vector2(1920, 32)
+
+[node name="Arena" type="Node2D" unique_id=1771651076]
+
+[node name="Background" type="Polygon2D" parent="." unique_id=233410514]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 0, 1080, 1920, 1080, 1920, 0)
+
+[node name="Ball" type="RigidBody2D" parent="." unique_id=1939299494]
+position = Vector2(960, 540)
+physics_material_override = ExtResource("1_pyk7t")
+script = ExtResource("2_x00a1")
+StartingForce = 500.0
+
+[node name="Polygon2D" type="Polygon2D" parent="Ball" unique_id=719477964]
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1254039037]
+shape = SubResource("CircleShape2D_oufw4")
+
+[node name="AIPaddle" parent="." unique_id=1613366336 instance=ExtResource("4_x00a1")]
+position = Vector2(64, 540)
+
+[node name="Paddle" parent="." unique_id=49096199 instance=ExtResource("1_2gd4f")]
+position = Vector2(1856, 540)
+motion_mode = 1
+Speed = 2.0
+
+[node name="TopWall" type="StaticBody2D" parent="." unique_id=1169431495]
+position = Vector2(960, -16)
+physics_material_override = ExtResource("1_pyk7t")
+
+[node name="Polygon2D" type="Polygon2D" parent="TopWall" unique_id=2070300414]
+polygon = PackedVector2Array(-960, -16, 960, -16, 960, 16, -960, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall" unique_id=46372029]
+shape = SubResource("RectangleShape2D_trkms")
+
+[node name="BottomWall" type="StaticBody2D" parent="." unique_id=248136164]
+position = Vector2(960, 1096)
+physics_material_override = ExtResource("1_pyk7t")
+
+[node name="Polygon2D" type="Polygon2D" parent="BottomWall" unique_id=701062284]
+polygon = PackedVector2Array(-960, -16, 960, -16, 960, 16, -960, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=1798777862]
+shape = SubResource("RectangleShape2D_trkms")
