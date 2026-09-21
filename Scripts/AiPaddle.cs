@@ -18,8 +18,16 @@ public partial class AiPaddle : CharacterBody2D
     private void SetTargetY()
     {
         _yTarget = _ball.Position.Y;
-        // Over/undershoot a little
+        // Over/undershoot a little, otherwise the AI will always lag behind too much
         var maxOvershoot = ActionThreshold * Speed;
+        if (_yTarget > Position.Y)
+        {
+            _yTarget += maxOvershoot;
+        }
+        else
+        {
+            _yTarget -= maxOvershoot;
+        }
         _yTarget += _random.Randf() * maxOvershoot - maxOvershoot / 2;
 
         _actionTimer = GetTree().CreateTimer(ActionDelay);

@@ -71,8 +71,10 @@ position = Vector2(960, 540)
 mass = 0.1
 physics_material_override = ExtResource("1_pyk7t")
 lock_rotation = true
+continuous_cd = 1
 contact_monitor = true
 max_contacts_reported = 1
+linear_damp = -0.05
 script = ExtResource("2_x00a1")
 StartingForce = 75.0
 StartLabel = NodePath("../Control/VBoxContainer/StartLabel")
@@ -88,7 +90,7 @@ shape = SubResource("RectangleShape2D_x00a1")
 [node name="AIPaddle" parent="." unique_id=1613366336 instance=ExtResource("4_x00a1")]
 position = Vector2(64, 540)
 Speed = 6.0
-ActionDelay = 0.4
+ActionDelay = 0.3
 ActionThreshold = 16.0
 
 [node name="Paddle" parent="." unique_id=49096199 instance=ExtResource("1_2gd4f")]
