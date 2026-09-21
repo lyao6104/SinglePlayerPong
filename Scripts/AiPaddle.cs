@@ -23,12 +23,12 @@ public partial class AiPaddle : CharacterBody2D
 
         if (Position.Y > _ball.Position.Y)
         {
-            direction.Y -= 1;
+            direction.Y = -1;
         }
 
         if (Position.Y < _ball.Position.Y)
         {
-            direction.Y += 1;
+            direction.Y = 1;
         }
 
         if (direction.Length() > 0)

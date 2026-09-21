@@ -4,12 +4,27 @@
 [ext_resource type="PhysicsMaterial" uid="uid://h1xu6wn50q0u" path="res://Materials/DefaultPhysicsMaterial.tres" id="1_pyk7t"]
 [ext_resource type="Script" uid="uid://vgongcn4qewo" path="res://Scripts/Ball.cs" id="2_x00a1"]
 [ext_resource type="PackedScene" uid="uid://s73klvapx8cc" path="res://Scenes/AIPaddle.tscn" id="4_x00a1"]
+[ext_resource type="FontFile" uid="uid://duo4caaptd2rg" path="res://Fonts/PublicPixel.otf" id="5_4f205"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_oufw4"]
-radius = 16.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x00a1"]
+size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trkms"]
 size = Vector2(1920, 32)
+
+[sub_resource type="LabelSettings" id="LabelSettings_oufw4"]
+font = ExtResource("5_4f205")
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_trkms"]
+font = ExtResource("5_4f205")
+font_size = 64
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oufw4"]
+size = Vector2(32, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yh1dm"]
+size = Vector2(32, 1080)
 
 [node name="Arena" type="Node2D" unique_id=1771651076]
 
@@ -17,25 +32,32 @@ size = Vector2(1920, 32)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(0, 0, 0, 1080, 1920, 1080, 1920, 0)
 
-[node name="Ball" type="RigidBody2D" parent="." unique_id=1939299494]
+[node name="Ball" type="RigidBody2D" parent="." unique_id=1939299494 node_paths=PackedStringArray("StartLabel", "ScoreLabel")]
 position = Vector2(960, 540)
+mass = 0.1
 physics_material_override = ExtResource("1_pyk7t")
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("2_x00a1")
-StartingForce = 500.0
+StartingForce = 75.0
+StartLabel = NodePath("../Control/VBoxContainer/StartLabel")
+ScoreLabel = NodePath("../Control/VBoxContainer/ScoreLabel")
 
 [node name="Polygon2D" type="Polygon2D" parent="Ball" unique_id=719477964]
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1254039037]
-shape = SubResource("CircleShape2D_oufw4")
+shape = SubResource("RectangleShape2D_x00a1")
 
 [node name="AIPaddle" parent="." unique_id=1613366336 instance=ExtResource("4_x00a1")]
 position = Vector2(64, 540)
+Speed = 4.0
 
 [node name="Paddle" parent="." unique_id=49096199 instance=ExtResource("1_2gd4f")]
 position = Vector2(1856, 540)
 motion_mode = 1
-Speed = 2.0
+Speed = 5.0
 
 [node name="TopWall" type="StaticBody2D" parent="." unique_id=1169431495]
 position = Vector2(960, -16)
@@ -56,3 +78,51 @@ polygon = PackedVector2Array(-960, -16, 960, -16, 960, 16, -960, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=1798777862]
 shape = SubResource("RectangleShape2D_trkms")
+
+[node name="Control" type="Control" parent="." unique_id=1584205957]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=2089662329]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.0
+offset_top = -11.5
+offset_right = 82.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartLabel" type="Label" parent="Control/VBoxContainer" unique_id=1045409899]
+layout_mode = 2
+text = "Press [Space] to Start"
+label_settings = SubResource("LabelSettings_oufw4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Control/VBoxContainer" unique_id=508754494]
+layout_mode = 2
+text = "0-0"
+label_settings = SubResource("LabelSettings_trkms")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AIGoal" type="StaticBody2D" parent="." unique_id=1290837495 groups=["goal", "goal_ai"]]
+position = Vector2(-16, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AIGoal" unique_id=1252409577]
+shape = SubResource("RectangleShape2D_oufw4")
+
+[node name="PlayerGoal" type="StaticBody2D" parent="." unique_id=952112313 groups=["goal"]]
+position = Vector2(1936, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerGoal" unique_id=801587141]
+shape = SubResource("RectangleShape2D_yh1dm")
+
+[connection signal="body_entered" from="Ball" to="Ball" method="OnBodyEntered"]
