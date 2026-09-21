@@ -16,7 +16,6 @@ public partial class Ball : RigidBody2D
     public override void _Ready()
     {
         _random = new RandomNumberGenerator();
-        _startingPos = Position;
 
         var startEvents =
             string.Join(", ", InputMap.ActionGetEvents("Start").Select(inputEvent => inputEvent.AsText()));
@@ -27,6 +26,8 @@ public partial class Ball : RigidBody2D
     {
         if (!_initialized && Input.IsActionJustPressed("Start"))
         {
+            _startingPos = GlobalPosition;
+
             var direction = Vector2.Right.Rotated(_random.Randf() * Mathf.Tau);
             ApplyImpulse(direction * StartingForce);
 
@@ -45,8 +46,14 @@ public partial class Ball : RigidBody2D
         {
             IncreaseScore(body.IsInGroup("goal_ai"));
 
-            SetDeferred("LinearVelocity", Vector2.Zero);
-            SetDeferred("Position", _startingPos);
+            LinearVelocity = Vector2.Zero;
+            PhysicsServer2D.BodySetState(GetRid(), PhysicsServer2D.BodyState.LinearVelocity, Vector2.Zero);
+
+            GlobalPosition = _startingPos;
+            PhysicsServer2D.BodySetState(GetRid(), PhysicsServer2D.BodyState.Transform, Transform2D.Identity.Translated(_startingPos));
+
+            StartLabel.Visible = true;
+            _initialized = false;
         }
     }
 
