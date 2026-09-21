@@ -50,7 +50,8 @@ public partial class Ball : RigidBody2D
             PhysicsServer2D.BodySetState(GetRid(), PhysicsServer2D.BodyState.LinearVelocity, Vector2.Zero);
 
             GlobalPosition = _startingPos;
-            PhysicsServer2D.BodySetState(GetRid(), PhysicsServer2D.BodyState.Transform, Transform2D.Identity.Translated(_startingPos));
+            PhysicsServer2D.BodySetState(GetRid(), PhysicsServer2D.BodyState.Transform,
+                Transform2D.Identity.Translated(_startingPos));
 
             StartLabel.Visible = true;
             _initialized = false;
