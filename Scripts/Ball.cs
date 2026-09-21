@@ -28,7 +28,9 @@ public partial class Ball : RigidBody2D
         {
             _startingPos = GlobalPosition;
 
-            var direction = Vector2.Right.Rotated(_random.Randf() * Mathf.Tau);
+            // i.e. moves left or right, with an angle of up to 45 degrees up or down
+            var leftRight = _random.RandiRange(0, 1) == 0 ? Vector2.Left : Vector2.Right;
+            var direction = leftRight.Rotated(_random.Randf() * Mathf.Pi / 2 - Mathf.Pi / 4);
             ApplyImpulse(direction * StartingForce);
 
             StartLabel.Visible = false;
