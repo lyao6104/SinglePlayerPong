@@ -32,7 +32,7 @@ public partial class Paddle : CharacterBody2D
             direction = direction.Normalized() * Speed;
         }
 
-        MoveAndCollide(direction * Speed);
+        MoveAndCollide(direction);
         Position = new Vector2(_xPos, Position.Y);
     }
 }

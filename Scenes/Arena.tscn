@@ -87,12 +87,14 @@ shape = SubResource("RectangleShape2D_x00a1")
 
 [node name="AIPaddle" parent="." unique_id=1613366336 instance=ExtResource("4_x00a1")]
 position = Vector2(64, 540)
-Speed = 4.0
+Speed = 6.0
+ActionDelay = 0.4
+ActionThreshold = 16.0
 
 [node name="Paddle" parent="." unique_id=49096199 instance=ExtResource("1_2gd4f")]
 position = Vector2(1856, 540)
 motion_mode = 1
-Speed = 4.5
+Speed = 9.0
 
 [node name="TopWall" type="StaticBody2D" parent="." unique_id=1169431495]
 position = Vector2(960, -16)
