@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b0iyn1qvkyx4x" path="res://Scripts/Paddle.cs" id="1_8wypp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oufw4"]
-size = Vector2(32, 192)
+size = Vector2(64, 192)
 
 [node name="Paddle" type="CharacterBody2D" unique_id=1613366336]
 script = ExtResource("1_8wypp")
@@ -12,4 +12,5 @@ script = ExtResource("1_8wypp")
 polygon = PackedVector2Array(-16, -96, 16, -96, 16, 96, -16, 96)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2069210432]
+position = Vector2(16, 0)
 shape = SubResource("RectangleShape2D_oufw4")
