@@ -3,7 +3,7 @@ using Godot;
 public partial class AiPaddle : CharacterBody2D
 {
     [Export] public float Speed { get; set; } = 1.5f;
-    [Export] public float ActionDelay = 0.25f;
+    [Export] public float MaxActionDelay = 0.5f, MinActionDelay = 0.1f;
     [Export] public float ActionThreshold = 1f;
 
     private Vector2 _screenSize;
@@ -19,7 +19,7 @@ public partial class AiPaddle : CharacterBody2D
     {
         _yTarget = _ball.Position.Y;
         // Over/undershoot a little, otherwise the AI will always lag behind too much
-        var maxOvershoot = ActionThreshold * Speed;
+        var maxOvershoot = Mathf.Min(ActionThreshold * Speed, Mathf.Abs(_yTarget - Position.Y));
         if (_yTarget > Position.Y)
         {
             _yTarget += maxOvershoot;
@@ -28,9 +28,10 @@ public partial class AiPaddle : CharacterBody2D
         {
             _yTarget -= maxOvershoot;
         }
+
         _yTarget += _random.Randf() * maxOvershoot - maxOvershoot / 2;
 
-        _actionTimer = GetTree().CreateTimer(ActionDelay);
+        _actionTimer = GetTree().CreateTimer(_random.RandfRange(MinActionDelay, MaxActionDelay));
     }
 
     public override void _Ready()
