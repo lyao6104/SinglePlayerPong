@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bkadht57160lf" path="res://Scenes/Paddle.tscn" id="1_2gd4f"]
 [ext_resource type="PhysicsMaterial" uid="uid://h1xu6wn50q0u" path="res://Materials/DefaultPhysicsMaterial.tres" id="1_pyk7t"]
+[ext_resource type="Script" uid="uid://dmweor0dby0yu" path="res://Scripts/ExitGame.cs" id="2_dpcf1"]
 [ext_resource type="Script" uid="uid://vgongcn4qewo" path="res://Scripts/Ball.cs" id="2_x00a1"]
 [ext_resource type="PackedScene" uid="uid://s73klvapx8cc" path="res://Scenes/AIPaddle.tscn" id="4_x00a1"]
 [ext_resource type="FontFile" uid="uid://duo4caaptd2rg" path="res://Fonts/PublicPixel.otf" id="5_4f205"]
@@ -13,6 +14,10 @@ font_size = 64
 [sub_resource type="LabelSettings" id="LabelSettings_trkms"]
 font = ExtResource("5_4f205")
 font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_yh1dm"]
+font = ExtResource("5_4f205")
+font_size = 24
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x00a1"]
 size = Vector2(32, 32)
@@ -38,7 +43,7 @@ anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=2089662329]
+[node name="MiddleText" type="VBoxContainer" parent="Control" unique_id=2089662329]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -52,19 +57,37 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="StartLabel" type="Label" parent="Control/VBoxContainer" unique_id=1045409899]
+[node name="StartLabel" type="Label" parent="Control/MiddleText" unique_id=1045409899]
 layout_mode = 2
-text = "Press [Space] to Start"
+text = "[W] or [S] to Move
+
+Press [Space] to Start
+"
 label_settings = SubResource("LabelSettings_oufw4")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreLabel" type="Label" parent="Control/VBoxContainer" unique_id=508754494]
+[node name="ScoreLabel" type="Label" parent="Control/MiddleText" unique_id=508754494]
 layout_mode = 2
 text = "0-0"
 label_settings = SubResource("LabelSettings_trkms")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ExitGameLabel" type="Label" parent="Control" unique_id=1842085541 node_paths=PackedStringArray("Background")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.025
+anchor_bottom = 0.025
+offset_right = 81.96
+offset_bottom = 23.0
+text = "Hold [Escape] to Exit"
+label_settings = SubResource("LabelSettings_yh1dm")
+script = ExtResource("2_dpcf1")
+Background = NodePath("../../Background")
+HoldDuration = 0.75
 
 [node name="Ball" type="RigidBody2D" parent="." unique_id=1939299494 node_paths=PackedStringArray("StartLabel", "ScoreLabel")]
 position = Vector2(960, 540)
@@ -79,8 +102,8 @@ linear_damp = -0.05
 angular_damp_mode = 1
 script = ExtResource("2_x00a1")
 StartingForce = 75.0
-StartLabel = NodePath("../Control/VBoxContainer/StartLabel")
-ScoreLabel = NodePath("../Control/VBoxContainer/ScoreLabel")
+StartLabel = NodePath("../Control/MiddleText/StartLabel")
+ScoreLabel = NodePath("../Control/MiddleText/ScoreLabel")
 
 [node name="Polygon2D" type="Polygon2D" parent="Ball" unique_id=719477964]
 color = Color(1, 0, 0, 1)

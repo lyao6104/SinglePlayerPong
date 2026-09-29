@@ -17,9 +17,13 @@ public partial class Ball : RigidBody2D
     {
         _random = new RandomNumberGenerator();
 
+        var upEvents =
+            string.Join(", ", InputMap.ActionGetEvents("Paddle Up").Select(inputEvent => inputEvent.AsText()));
+        var downEvents =
+            string.Join(", ", InputMap.ActionGetEvents("Paddle Down").Select(inputEvent => inputEvent.AsText()));
         var startEvents =
             string.Join(", ", InputMap.ActionGetEvents("Start").Select(inputEvent => inputEvent.AsText()));
-        StartLabel.Text = $"Press [{startEvents}] to Start";
+        StartLabel.Text = $"[{upEvents}] or [{downEvents}] to Move\n\nPress [{startEvents}] to Start\n";
     }
 
     public override void _Process(double delta)
